@@ -58,7 +58,6 @@
     "rollup-plugin-dts": "^4.2.3",
     "rollup-plugin-esbuild": "^4.10.3",
     "rollup-plugin-terser": "^7.0.2",
-    "rxjs": "^7.8.1",
     "ts-jest": "^28.0.8",
     "typescript": "4.6.3",
     "zod": "3.21.4"
@@ -67,6 +66,7 @@
     "@nestjs/common": ">= 8.0.0",
     "@nestjs/core": ">= 8.0.0",
     "@nestjs/swagger": ">= 5.0.0",
+    "rxjs": "^7.8.1",
     "zod": ">= 3.14.3"
   },
   "peerDependenciesMeta": {
