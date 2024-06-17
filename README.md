@@ -50,7 +50,7 @@
 ## Installation
 
 ```
-yarn add nestjs-zod zod
+pnpm add nestjs-zod zod
 ```
 
 Peer dependencies:
