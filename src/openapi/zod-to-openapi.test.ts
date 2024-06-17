@@ -232,3 +232,56 @@ it('should serialize lazy schema', () => {
     type: 'string',
   })
 })
+
+describe('should serialize branded schemas', () => {
+  const testCases: [string, ZodTypeAny, ReturnType<typeof zodToOpenAPI>][] = [
+    // [zod schema, expected open api type]
+    ['string', z.string().brand<'Brand'>(), { type: 'string' }],
+    ['number', z.number().brand<'Brand'>(), { type: 'number' }],
+    ['boolean', z.boolean().brand<'Brand'>(), { type: 'boolean' }],
+    [
+      'bigint',
+      z.bigint().brand<'Brand'>(),
+      { type: 'integer', format: 'int64' },
+    ],
+    [
+      'object',
+      z
+        .object({
+          prop1: z.string(),
+          prop2: z.number().optional(),
+        })
+        .brand<'Brand'>(),
+      {
+        type: 'object',
+        required: ['prop1'],
+        properties: {
+          prop1: { type: 'string' },
+          prop2: { type: 'number' },
+        },
+      },
+    ],
+    [
+      'nested branded schema',
+      z.object({
+        branded: z.string().brand<'Brand'>(),
+      }),
+      {
+        type: 'object',
+        required: ['branded'],
+        properties: {
+          branded: {
+            type: 'string',
+          },
+        },
+      },
+    ],
+  ]
+
+  for (const [zodType, zodSchema, expectedOpenApiSchema] of testCases) {
+    // eslint-disable-next-line no-loop-func
+    it(zodType, () => {
+      expect(zodToOpenAPI(zodSchema)).toEqual(expectedOpenApiSchema)
+    })
+  }
+})
